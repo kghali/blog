@@ -12,7 +12,7 @@ This project contains:
 
 ## How to start the application
 To launch project in development mode:
-###Launch the REST API
+### Launch the REST API
 * go to <b>src/main/resources/hibernate.properties</b> and change database credentials with yours 
   <pre>
   jdbc.user=root
@@ -23,7 +23,7 @@ To launch project in development mode:
   mvn spring-boot:run
   </pre>
 * API will be available at http://localhost:8080 
-###Launch to web client
+### Launch to web client
 * install Angular CLI
   <pre>npm install -g @angular/cli</pre>
 * under <b>web directory</b> of the project, run
