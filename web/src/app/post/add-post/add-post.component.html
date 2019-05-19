@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+        <h1> Blog</h1>
+      <h3>Add new post</h3>
+      <form [formGroup]="newPostForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" class="form-control" formControlName="title">
+        </div>
+        <div class="form-group">
+          <label for="content">Content</label>
+          <textarea name="content" id="" cols="20" rows="10" class="form-control" formControlName="content"></textarea>
+        </div>
+        <div class="btn-toolbar">
+          <button class="btn btn-primary" type="submit" [disabled]="newPostForm.invalid">
+              <span class="glyphicon glyphicon-saved"></span> Save
+          </button>
+          <button class="btn btn-warning" type="button" (click)="goBack()">
+              <span class="glyphicon glyphicon-remove"></span> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

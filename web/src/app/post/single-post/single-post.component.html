@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12" *ngIf="!editMode">
+      <h1> Blog</h1>
+       <li class="list-group-item">
+        <h2>{{post.title}}</h2>
+        <p>{{post.content}}</p>
+
+      <div class="btn-toolbar">
+        <button type="button" class="btn btn-primary btn-sm" (click)="goBack()">
+          <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
+        </button>
+        <button type="button" class="btn btn-info btn-sm" (click)="editPost(post)">
+          <span class="glyphicon glyphicon-edit"></span> Edit
+        </button>
+        <button type="button" class="btn btn-success btn-sm" (click)="viewComments(post)">
+          <span class="glyphicon glyphicon-envelope"></span> Show comments
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" type="button"
+          *ngIf="!showCommentInput && showAddCommentButton" (click)="showCommentInput=!showCommentInput">
+          <span class="glyphicon glyphicon-plus"></span> add comment
+        </button>
+      </div>
+    </li>
+      <div *ngIf="showCommentInput">
+        <h4>New comment</h4>
+        <form [formGroup]="newCommentForm" (ngSubmit)="onNewCommentSubmit()">
+          <div class="form-group">
+            <textarea name="message" id="message" value="" pacehoder="comment" cols="20" rows="2" class="form-control"
+              formControlName="message"></textarea>
+          </div>
+          <div class="btn-toolbar">
+            <button type="button" class="btn btn-primary btn-sm" type="submit" [disabled]="newCommentForm.invalid">
+              <span class="glyphicon glyphicon-saved"></span> Save
+            </button>
+            <button type="button" class="btn btn-warning btn-sm" type="button"
+              (click)="showCommentInput = !showCommentInput">
+              <span class="glyphicon glyphicon-remove"></span> Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+      <div>
+        <p *ngIf="noComment">There is no comment for this post</p>
+        <div *ngIf="post.comments">
+          <h4>Comments</h4>
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let comment of post.comments ; let i = index">
+              <div class="row">
+                <div class="col-xs-2">
+                  <button type="button" class="btn btn-info btn-sm" type="button" (click)="editComment(comment, i)">
+                    <span class="glyphicon glyphicon-edit"></span>
+                  </button>
+                  <button type="button" class="btn btn-danger btn-sm" type="button" (click)="deleteComment(comment)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </div>
+                <div class="col-xs-10">
+                  <p *ngIf="editCommentMode!=i">{{comment.message}}</p>
+                  <p *ngIf="editCommentMode==i">
+                    <textarea class="form-control" cols="20" rows="3" [ngModel]="comment.message"
+                      (keyup.enter)="onSaveComment($event)">
+                    </textarea>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12" *ngIf="editMode">
+      <h1> Blog</h1>
+      <form [formGroup]="editPostForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" class="form-control" [ngModel]="post.title" formControlName="title">
+        </div>
+        <div class="form-group">
+          <label for="content">Content</label>
+          <textarea name="content" id="" cols="20" rows="10" class="form-control" [ngModel]="post.content"
+            formControlName="content"></textarea>
+        </div>
+        <div class="btn-toolbar">
+          <button class="btn btn-primary" type="submit" [disabled]="editPostForm.invalid">
+              <span class="glyphicon glyphicon-saved"></span> Save
+          </button>
+          <button class="btn btn-warning" type="button" (click)="editPost()">
+              <span class="glyphicon glyphicon-remove"></span> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
